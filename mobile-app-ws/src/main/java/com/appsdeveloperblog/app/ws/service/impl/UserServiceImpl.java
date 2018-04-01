@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public UserDTO createUser(UserDTO user) {
-		UserDTO returnValue = new UserDTO();
+		UserDTO returnValue = null;
 		
 		//validate the required fields
 		userProfileUtils.validateRequiredFields(user);
@@ -53,7 +53,8 @@ public class UserServiceImpl implements UserService{
 		user.setEncryptedPassword(encryptedPassword);
 		
 		//Record data into a database
-				
+		returnValue = this.saveUser(user);
+		
 		//Return back the user profile
 		
 		
@@ -76,6 +77,17 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		return userDto;
+	}
+	
+	private UserDTO saveUser(UserDTO user) {
+		UserDTO returnValue = null;
+		try {
+			this.database.openConnection();
+			returnValue = this.database.saveUser(user);
+		} finally {
+			this.database.closeConnection();
+		}
+		return returnValue;
 	}
 
 }

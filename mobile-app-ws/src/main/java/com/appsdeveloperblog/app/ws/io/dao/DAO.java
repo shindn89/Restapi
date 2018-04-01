@@ -12,5 +12,7 @@ import com.appsdeveloperblog.app.ws.shared.dto.UserDTO;
 public interface DAO {
 	void openConnection(); //open connection to db
 	UserDTO getUserByUserName(String userName);
+	UserDTO saveUser(UserDTO user);
 	void closeConnection(); //close connection to db
+	
 }
