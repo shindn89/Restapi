@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService{
 		{
 			throw new CouldNotCreateRecordException(ErrorMessages.RECORD_ALREADY_EXIST.name());
 		}
-		//Create an Entity object
 		
 		//Generate secure public user id
 				

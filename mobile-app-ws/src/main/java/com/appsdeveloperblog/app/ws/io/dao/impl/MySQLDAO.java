@@ -10,12 +10,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.BeanUtils;
 
 import com.appsdeveloperblog.app.ws.io.dao.DAO;
 import com.appsdeveloperblog.app.ws.io.entity.UserEntity;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDTO;
+import com.appsdeveloperblog.app.ws.utils.HibernateUtils;
 
 /**
  * @author DN
@@ -27,8 +29,8 @@ public class MySQLDAO implements DAO {
 	
 	@Override
 	public void openConnection() {
-		// TODO Auto-generated method stub
-		
+		SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
+		session = sessionFactory.openSession();
 	}
 
 	@Override
@@ -60,7 +62,10 @@ public class MySQLDAO implements DAO {
 
 	@Override
 	public void closeConnection() {
-		// TODO Auto-generated method stub
+		if(session != null)
+		{
+			session.close();
+		}
 		
 	}
 
