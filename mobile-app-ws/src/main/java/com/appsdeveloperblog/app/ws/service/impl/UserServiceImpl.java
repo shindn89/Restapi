@@ -44,9 +44,14 @@ public class UserServiceImpl implements UserService{
 		user.setUserId(userId);
 				
 		//Generate salt - generate secure psw and store value into db
-				
+		String salt = userProfileUtils.getSalt(30);	
+		
 		//Generate secure password
-				
+		//and salt and encryptedpsw will store in DB
+		String encryptedPassword = userProfileUtils.generateSecurePassword(user.getPassword(), salt);
+		user.setSalt(salt);
+		user.setEncryptedPassword(encryptedPassword);
+		
 		//Record data into a database
 				
 		//Return back the user profile
