@@ -1,8 +1,10 @@
 package com.appsdeveloperblog.app.ws.ui.entrypoints;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -38,8 +40,15 @@ public class UserEntryPoint {
 		
 		//prepare response
 		BeanUtils.copyProperties(createUserProfile, returnValue);
-		
-		
+					
+		return returnValue;
+	}
+	
+	@GET
+	@Path("/{id}") //replace the actual value of id?
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public UserProfileRest getUserProfile(@PathParam("id") String id) {
+		UserProfileRest returnValue = null;
 		
 		return returnValue;
 	}
