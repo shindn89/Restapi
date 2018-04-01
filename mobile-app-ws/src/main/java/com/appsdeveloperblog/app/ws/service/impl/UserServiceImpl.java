@@ -40,6 +40,8 @@ public class UserServiceImpl implements UserService{
 		}
 		
 		//Generate secure public user id
+		String userId = userProfileUtils.generateUserId(30);
+		user.setUserId(userId);
 				
 		//Generate salt - generate secure psw and store value into db
 				
