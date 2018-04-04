@@ -11,6 +11,7 @@ import com.appsdeveloperblog.app.ws.shared.dto.UserDTO;
  */
 public interface UserService {
 	
-	public UserDTO createUser(UserDTO user);
+	UserDTO createUser(UserDTO user);
+	UserDTO getUser(String id);
 
 }

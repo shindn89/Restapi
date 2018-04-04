@@ -13,6 +13,7 @@ public interface DAO {
 	void openConnection(); //open connection to db
 	UserDTO getUserByUserName(String userName);
 	UserDTO saveUser(UserDTO user);
+	UserDTO getUser(String id);
 	void closeConnection(); //close connection to db
 	
 }

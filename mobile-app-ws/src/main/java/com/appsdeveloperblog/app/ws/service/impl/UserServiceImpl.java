@@ -4,6 +4,7 @@
 package com.appsdeveloperblog.app.ws.service.impl;
 
 import com.appsdeveloperblog.app.ws.exceptions.CouldNotCreateRecordException;
+import com.appsdeveloperblog.app.ws.exceptions.NoRecordFoundException;
 import com.appsdeveloperblog.app.ws.io.dao.DAO;
 import com.appsdeveloperblog.app.ws.io.dao.impl.MySQLDAO;
 import com.appsdeveloperblog.app.ws.service.UserService;
@@ -61,6 +62,22 @@ public class UserServiceImpl implements UserService{
 		return returnValue;
 	}
 	
+	public UserDTO getUser(String id) {
+		UserDTO returnValue = null;
+		try {
+			this.database.openConnection();
+			returnValue = this.database.getUser(id);
+		} catch(Exception ex) {
+			ex.printStackTrace();
+			throw new NoRecordFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		} finally {
+			this.database.closeConnection();
+		}
+		
+		return returnValue;
+	}
+	
+	
 	private UserDTO getUserByUserName(String userName)
 	{
 		UserDTO userDto = null;
@@ -89,5 +106,7 @@ public class UserServiceImpl implements UserService{
 		}
 		return returnValue;
 	}
+
+	
 
 }

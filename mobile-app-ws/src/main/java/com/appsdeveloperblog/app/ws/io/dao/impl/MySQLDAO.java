@@ -21,7 +21,7 @@ import com.appsdeveloperblog.app.ws.utils.HibernateUtils;
 
 /**
  * @author DN
- *
+ * Actual connection with Database and working with DB
  */
 public class MySQLDAO implements DAO {
 
@@ -59,6 +59,28 @@ public class MySQLDAO implements DAO {
 		
 		return userDto;
 	}
+	//exception will thrown if user does not exist
+	public UserDTO getUser(String id) {
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		
+		//create criteria against a particular persistent class
+		CriteriaQuery<UserEntity> criteria = cb.createQuery(UserEntity.class);
+		
+		//Query roots always reference entitie
+		Root<UserEntity> profileRoot = criteria.from(UserEntity.class);
+		criteria.select(profileRoot);
+		criteria.where(cb.equal(profileRoot.get("userId"), id));
+		
+		//fetch single result
+		UserEntity userEntity = session.createQuery(criteria).getSingleResult();
+		
+		UserDTO userDto = new UserDTO();
+		BeanUtils.copyProperties(userEntity, userDto);
+		
+		return userDto;
+	}
+	
+	
 	public UserDTO saveUser(UserDTO user) {
 		UserDTO returnValue = null;
 		UserEntity userEntity = new UserEntity();
@@ -82,5 +104,7 @@ public class MySQLDAO implements DAO {
 		}
 		
 	}
+
+	
 
 }

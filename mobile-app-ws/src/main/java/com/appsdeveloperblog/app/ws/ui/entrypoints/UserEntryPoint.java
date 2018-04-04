@@ -49,6 +49,11 @@ public class UserEntryPoint {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public UserProfileRest getUserProfile(@PathParam("id") String id) {
 		UserProfileRest returnValue = null;
+		UserService userService = new UserServiceImpl();
+		UserDTO userProfile = userService.getUser(id);
+		
+		returnValue = new UserProfileRest();
+		BeanUtils.copyProperties(userProfile, returnValue);
 		
 		return returnValue;
 	}
