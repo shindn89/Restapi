@@ -15,5 +15,6 @@ public interface DAO {
 	UserDTO saveUser(UserDTO user);
 	UserDTO getUser(String id);
 	void closeConnection(); //close connection to db
+	void updateUser(UserDTO userProfile);
 	
 }

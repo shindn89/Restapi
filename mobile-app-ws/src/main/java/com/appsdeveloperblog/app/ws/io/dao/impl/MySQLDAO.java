@@ -105,6 +105,16 @@ public class MySQLDAO implements DAO {
 		
 	}
 
+	public void updateUser(UserDTO userProfile) {
+		UserEntity userEntity = new UserEntity();
+		BeanUtils.copyProperties(userProfile, userEntity);
+		
+		session.beginTransaction();
+		session.update(userProfile);
+		session.getTransaction().commit();
+	
+	}
+
 	
 
 }

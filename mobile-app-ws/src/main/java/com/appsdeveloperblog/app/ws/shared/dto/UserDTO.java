@@ -21,8 +21,21 @@ public class UserDTO implements Serializable{
 	private String salt; //psw gemerator?
 	private String encryptedPassword;
 	private String userId; //db id?
+	private String token;
 	
 	
+	/**
+	 * @return the token
+	 */
+	public String getToken() {
+		return token;
+	}
+	/**
+	 * @param token the token to set
+	 */
+	public void setToken(String token) {
+		this.token = token;
+	}
 	/**
 	 * @return the id
 	 */
