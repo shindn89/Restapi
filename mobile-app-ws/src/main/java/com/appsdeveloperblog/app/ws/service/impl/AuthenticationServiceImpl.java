@@ -49,15 +49,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		if (!authenticated)
 		{
 			throw new AuthenticationException(ErrorMessages.AUTHENTICATION_FAILED.getErrorMessage());
-		}
+		}		
 		
-		
-		
-		
-		UserDTO returnValue = null;
-		
-		
-		return returnValue;
+		return storedUser;
 	}
 
 	public String issueAccessToken(UserDTO userProfile) throws AuthenticationException {
@@ -85,13 +79,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		
 		userProfile.setToken(tokenToSaveToDatabase);
 		
-		storeAccessToken(userProfile);
+		updateUserProfile(userProfile);
 		
 		return returnValue;
 	}
 	
+	public void resetSecurityCridentials(String userPassword, UserDTO authenticationUser) {
+		//Generate new salt
+		UserProfileUtils userUtils = new UserProfileUtils();
+		String salt = userUtils.getSalt(30);
+		
+		//Generate new secure password
+		String securePassword = userUtils.generateSecurePassword(userPassword, salt);
+		authenticationUser.setSalt(salt);
+		authenticationUser.setEncryptedPassword(securePassword);		
+		
+		//Update UserProfile with new salt and password
+		updateUserProfile(authenticationUser);
+	}
+	
+	
 	//store token to DB
-	private void storeAccessToken(UserDTO userProfile)
+	private void updateUserProfile(UserDTO userProfile)
 	{
 		this.database = new MySQLDAO();
 		try {
@@ -102,6 +111,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			database.closeConnection();
 		}
 	}
+
+	
 	
 
 }

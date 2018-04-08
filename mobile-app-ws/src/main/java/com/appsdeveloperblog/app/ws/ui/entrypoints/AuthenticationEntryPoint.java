@@ -34,6 +34,12 @@ public class AuthenticationEntryPoint {
 		AuthenticationService authenticationService = new AuthenticationServiceImpl();
 		UserDTO authenticationUser = authenticationService.authenticate(loginCredentials.getUserName(), loginCredentials.getUserPassword());
 		
+		//Reset Access Token
+		authenticationService.resetSecurityCridentials(loginCredentials.getUserPassword(), authenticationUser);
+		
+		
+		
+		
 		String accessToken = authenticationService.issueAccessToken(authenticationUser);
 		
 		returnValue.setId(authenticationUser.getUserId());
