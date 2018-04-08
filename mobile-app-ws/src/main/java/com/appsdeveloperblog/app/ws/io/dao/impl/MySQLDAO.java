@@ -110,7 +110,7 @@ public class MySQLDAO implements DAO {
 		BeanUtils.copyProperties(userProfile, userEntity);
 		
 		session.beginTransaction();
-		session.update(userProfile);
+		session.update(userEntity);
 		session.getTransaction().commit();
 	
 	}
