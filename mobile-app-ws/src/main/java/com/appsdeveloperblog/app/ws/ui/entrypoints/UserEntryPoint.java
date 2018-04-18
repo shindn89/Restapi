@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.BeanUtils;
 
+import com.appsdeveloperblog.app.ws.annotations.Secured;
 import com.appsdeveloperblog.app.ws.service.UserService;
 import com.appsdeveloperblog.app.ws.service.impl.UserServiceImpl;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDTO;
@@ -44,6 +45,7 @@ public class UserEntryPoint {
 		return returnValue;
 	}
 	
+	@Secured
 	@GET
 	@Path("/{id}") //replace the actual value of id?
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
