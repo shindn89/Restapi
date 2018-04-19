@@ -109,10 +109,18 @@ public class UserServiceImpl implements UserService{
 		return returnValue;
 	}
 
-	@Override
 	public List<UserDTO> getUsers(int start, int limit) {
-		// TODO Auto-generated method stub
-		return null;
+		List<UserDTO> users = null;
+		
+		// get users from database
+		try {
+			this.database.openConnection();
+			users = this.database.getUsers(start,limit);
+		} finally {
+			this.database.closeConnection();
+		}
+		
+		return users;
 	}
 
 	
