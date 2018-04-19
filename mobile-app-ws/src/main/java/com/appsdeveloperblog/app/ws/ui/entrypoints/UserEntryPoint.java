@@ -80,6 +80,7 @@ public class UserEntryPoint {
 			UserProfileRest userModel = new UserProfileRest();
 			BeanUtils.copyProperties(userDto, userModel);
 			userModel.setHref("/users/" + userDto.getUserId());
+			returnValue.add(userModel);
 		}
 		
 		return returnValue;
