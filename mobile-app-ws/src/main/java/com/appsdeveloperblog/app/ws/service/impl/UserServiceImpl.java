@@ -3,6 +3,8 @@
  */
 package com.appsdeveloperblog.app.ws.service.impl;
 
+import java.util.List;
+
 import com.appsdeveloperblog.app.ws.exceptions.CouldNotCreateRecordException;
 import com.appsdeveloperblog.app.ws.exceptions.NoRecordFoundException;
 import com.appsdeveloperblog.app.ws.io.dao.DAO;
@@ -105,6 +107,12 @@ public class UserServiceImpl implements UserService{
 			this.database.closeConnection();
 		}
 		return returnValue;
+	}
+
+	@Override
+	public List<UserDTO> getUsers(int start, int limit) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	
