@@ -7,6 +7,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,6 +21,7 @@ import com.appsdeveloperblog.app.ws.service.UserService;
 import com.appsdeveloperblog.app.ws.service.impl.UserServiceImpl;
 import com.appsdeveloperblog.app.ws.shared.dto.UserDTO;
 import com.appsdeveloperblog.app.ws.ui.model.request.CreateUserRequestModel;
+import com.appsdeveloperblog.app.ws.ui.model.request.UpdateUserRequestModel;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserProfileRest;
 
 
@@ -82,6 +84,32 @@ public class UserEntryPoint {
 			userModel.setHref("/users/" + userDto.getUserId());
 			returnValue.add(userModel);
 		}
+		
+		return returnValue;
+	}
+	
+	@PUT
+	@Path("/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public UserProfileRest updateUserDetails(@PathParam("id") String id, UpdateUserRequestModel userDetails)
+	{
+		UserService userService = new UserServiceImpl();
+		UserDTO storedUserDetails = userService.getUser(id);
+		
+		//Set only those fields you would like to be updated with this request
+		if(userDetails.getFirstName() != null && !userDetails.getFirstName().isEmpty())
+		{
+			storedUserDetails.setFirstName(userDetails.getFirstName());
+		}
+		storedUserDetails.setLastName(userDetails.getLastName());
+		
+		//Update User details
+		userService.updateUserDetails(storedUserDetails);
+		
+		//prepare return value
+		UserProfileRest returnValue = new UserProfileRest();
+		BeanUtils.copyProperties(storedUserDetails, returnValue);
 		
 		return returnValue;
 	}
