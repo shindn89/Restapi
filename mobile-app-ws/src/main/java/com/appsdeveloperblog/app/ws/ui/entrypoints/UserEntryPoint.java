@@ -92,6 +92,7 @@ public class UserEntryPoint {
 		return returnValue;
 	}
 	
+	
 	@PUT
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -117,6 +118,8 @@ public class UserEntryPoint {
 		
 		return returnValue;
 	}
+	
+	@Secured
 	@DELETE
 	@Path("/{id}")
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
