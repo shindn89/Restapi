@@ -6,6 +6,7 @@ package com.appsdeveloperblog.app.ws.service.impl;
 import java.util.List;
 
 import com.appsdeveloperblog.app.ws.exceptions.CouldNotCreateRecordException;
+import com.appsdeveloperblog.app.ws.exceptions.CouldNotDeleteRecordException;
 import com.appsdeveloperblog.app.ws.exceptions.CouldNotUpdateRecordException;
 import com.appsdeveloperblog.app.ws.exceptions.NoRecordFoundException;
 import com.appsdeveloperblog.app.ws.io.dao.DAO;
@@ -139,6 +140,31 @@ public class UserServiceImpl implements UserService{
 		finally
 		{
 			this.database.closeConnection();
+		}
+	}
+
+	
+	public void deleteUser(UserDTO storedUserDetails) {
+		try {
+			this.database.openConnection();
+			this.database.deleteUser(storedUserDetails);
+		} catch (Exception ex) {
+			throw new CouldNotDeleteRecordException(ex.getMessage());
+		}
+		finally {
+			this.database.closeConnection();
+		}
+		
+		//verify that user is deleted
+		try {
+			storedUserDetails = getUser(storedUserDetails.getUserId());
+		} catch (NoRecordFoundException ex)	{
+			storedUserDetails = null;
+		}
+		
+		if(storedUserDetails != null)
+		{
+			throw new CouldNotDeleteRecordException(ErrorMessages.COULD_NOT_DELETE_RECORD.getErrorMessage());
 		}
 	}
 
